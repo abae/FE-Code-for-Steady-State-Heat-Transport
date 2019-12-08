@@ -68,4 +68,6 @@ for i = 1:length(NodeCoord)
     X(uint8(NodeCoord(i,2)/elemsize)+1, uint8(NodeCoord(i,1)/elemsize)+1) = NodeCoord(i,1);
     Y(uint8(NodeCoord(i,2)/elemsize)+1, uint8(NodeCoord(i,1)/elemsize)+1) = NodeCoord(i,2);
 end
+hold on
 contourf(X, Y, Tg);
+plotMesh(NodeCoord,Connectivity,'-');
