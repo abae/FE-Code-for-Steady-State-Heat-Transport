@@ -5,24 +5,23 @@ thickness = 1;
 D = 60.5; %isotropic thermal conductivity (W/mC)
 L = 10; %length (mm)
 W = 5;
-elemsize = .1; %element size
+elemsize = .5; %element size
 h = .1; %convection (W/mm^2C)
-Tf = [22;0];
-q = [1;0]; %flux (W/mm^2)
+Tf = 22;
+q = 1; %flux (W/mm^2)
 
 [NodeCoord, Connectivity] = getMesh(L, W, L/elemsize, W/elemsize);
 
-Lg = zeros(size(Connectivity,1),(2*size(Connectivity,2)));
+Lg = zeros(size(Connectivity,1),(size(Connectivity,2)));
 for i = 1:size(Connectivity,1)
     for j = 1:size(Connectivity,2)
-        Lg(i,(2*j)-1) = 2*Connectivity(i,j) - 1;
-        Lg(i,2*j) = 2*Connectivity(i,j);
+        Lg(i,j) = Connectivity(i,j);
     end
 end
 
-Kg = zeros(2*length(NodeCoord), 2*length(NodeCoord));
-Mg = zeros(2*length(NodeCoord), 2*length(NodeCoord));
-Fg = zeros(2*length(NodeCoord), 1);
+Kg = zeros(length(NodeCoord), length(NodeCoord));
+Mg = zeros(length(NodeCoord), length(NodeCoord));
+Fg = zeros(length(NodeCoord), 1);
 
 for i = 1:length(Connectivity)
     C = [NodeCoord(Connectivity(i,1),1),NodeCoord(Connectivity(i,1),2);
@@ -56,8 +55,7 @@ for i = 1:length(Connectivity)
 end
 T = (Kg+h*Mg)\Fg;
 Tx = zeros(L/elemsize,W/elemsize);
-Ty = zeros(L/elemsize,W/elemsize);
 for i = 1:length(NodeCoord)
-    Tx(uint8(NodeCoord(i,1)/elemsize)+1, uint8(NodeCoord(i,2)/elemsize)+1) = T((2*i)-1);
-    Ty(uint8(NodeCoord(i,1)/elemsize)+1, uint8(NodeCoord(i,2)/elemsize)+1) = T(2*i);
+    Tx(uint8(NodeCoord(i,1)/elemsize)+1, uint8(NodeCoord(i,2)/elemsize)+1) = T(i);
 end
+contourf(Tx);
