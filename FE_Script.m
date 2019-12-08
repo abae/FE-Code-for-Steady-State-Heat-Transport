@@ -5,7 +5,7 @@ thickness = 1;
 D = 60.5; %isotropic thermal conductivity (W/mC)
 L = 10; %length (m)
 W = 5;
-elemsize = .1; %element size
+elemsize = 1; %element size
 h = 10000; %convection (W/m^2C)
 Tf = 22;
 q = 1000; %flux (W/m^2)
@@ -65,4 +65,6 @@ for i = 1:length(NodeCoord)
     X(uint8(NodeCoord(i,2)/elemsize)+1, uint8(NodeCoord(i,1)/elemsize)+1) = NodeCoord(i,1);
     Y(uint8(NodeCoord(i,2)/elemsize)+1, uint8(NodeCoord(i,1)/elemsize)+1) = NodeCoord(i,2);
 end
+hold on
 contourf(X, Y, Tg);
+plotMesh(NodeCoord,Connectivity,'-');
