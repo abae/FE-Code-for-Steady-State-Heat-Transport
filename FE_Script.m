@@ -6,9 +6,9 @@ D = 60.5; %isotropic thermal conductivity (W/mC)
 L = 2; %length (m)
 W = 2;
 elemsize = 1; %element size
-h = 10000; %convection (W/m^2C)
+h = 0; %convection (W/m^2C)
 Tf = 22;
-q = 1000; %flux (W/m^2)
+q = 0; %flux (W/m^2)
 
 [NodeCoord, Connectivity] = getMesh(L, W, L/elemsize, W/elemsize);
 NodeCoord =     [0,0;1.3,0;2,0;
@@ -59,7 +59,7 @@ for i = 1:length(Connectivity)
         end
     end
 end
-T = (Kg+h*Mg)\(Fg1 + Fg2);
+T = [5;8.9;11;17;19.25;20;25;27.85;31];
 Tg = zeros(W/elemsize,L/elemsize);
 X = zeros(W/elemsize,L/elemsize);
 Y = zeros(W/elemsize,L/elemsize);
