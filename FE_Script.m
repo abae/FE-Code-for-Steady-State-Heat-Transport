@@ -67,4 +67,5 @@ for i = 1:length(NodeCoord)
 end
 hold on
 contourf(X, Y, Tg);
-%plotMesh(NodeCoord,Connectivity,'-');
+plotMesh(NodeCoord,Connectivity);
+hold off
