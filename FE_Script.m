@@ -58,12 +58,11 @@ for i = 1:length(Connectivity)
 end
 T = (Kg+h*Mg)\(Fg1 + Fg2);
 Tg = zeros(W/elemsize,L/elemsize);
-Y = [];
+X = zeros(W/elemsize,L/elemsize);
+Y = zeros(W/elemsize,L/elemsize);
 for i = 1:length(NodeCoord)
     Tg(uint8(NodeCoord(i,2)/elemsize)+1, uint8(NodeCoord(i,1)/elemsize)+1) = T(i);
-    if mod(i,L/elemsize) == 0
-        Y = [Y, NodeCoord(i,2)];
-    end
+    X(uint8(NodeCoord(i,2)/elemsize)+1, uint8(NodeCoord(i,1)/elemsize)+1) = NodeCoord(i,1);
+    Y(uint8(NodeCoord(i,2)/elemsize)+1, uint8(NodeCoord(i,1)/elemsize)+1) = NodeCoord(i,2);
 end
-X = NodeCoord(1:L/elemsize+1,1)';
-contourf(X,Y,Tg);
+contourf(X, Y, Tg);
