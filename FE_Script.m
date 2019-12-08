@@ -12,7 +12,7 @@ q = 0; %flux (W/m^2)
 
 [NodeCoord, Connectivity] = getMesh(L, W, L/elemsize, W/elemsize);
 NodeCoord =     [0,0;1.3,0;2,0;
-                0,1.2;0.75,1.2;2,.9;
+                0,1.2;0.75,.8;2,.9;
                 0,2;0.95,2;2,2];
 
 Lg = zeros(size(Connectivity,1),(size(Connectivity,2)));
@@ -59,7 +59,7 @@ for i = 1:length(Connectivity)
         end
     end
 end
-T = [5;8.9;11;17;19.25;20;25;27.85;31];
+T = [5;8.9;11;17;15.25;20;25;27.85;31];
 Tg = zeros(W/elemsize,L/elemsize);
 X = zeros(W/elemsize,L/elemsize);
 Y = zeros(W/elemsize,L/elemsize);
