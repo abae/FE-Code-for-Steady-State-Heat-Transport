@@ -2,7 +2,7 @@ clc
 clear all
 
 thickness = 1;
-D = 60.5; %isotropic thermal conductivity (W/mC)
+D = 60.50; %isotropic thermal conductivity (W/mC)
 L = 10; %length (m)
 W = 5;
 elemsize = .1; %element size
