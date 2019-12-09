@@ -4,18 +4,18 @@ syms x y
 
 thickness = 1;
 D = 60.5; %isotropic thermal conductivity (W/mC)
-L = 10; %length (m)
-W = 5;
+L = 1; %length (m)
+W = 1;
 elemsizeX = 10; %element size
 elemsizeY = 10;
 %h = -(2*D)/L; %convection (W/m^2C)
 %Tf = y^2;
-h = 10000; %convection (W/m^2C)
-Tf = 22;
-q = 0; %flux (W/m^2)
-Tsym = x^2 + y^2;
-s = -4*D;
-Rsym = 2*D*L-h*(Tf-(L)^2-y^2);
+h = -(2*D*(L+y))/L^2; %convection (W/m^2C)
+Tf = y^2+L*y;
+q = -2*D*y; %flux (W/m^2)
+Tsym = x^2 + y^2 + x*y;
+s = -(laplacian(Tsym))*D;
+Rsym = 2*D*(L+y)-h*(Tf-L^2-y^2-L*y);
 
 [NodeCoord, Connectivity] = getMesh(L, W, elemsizeX, elemsizeY);
 
@@ -45,7 +45,7 @@ for i = 1:length(Connectivity)
         end
     end
     if mod(i, elemsizeX) == 0
-        [Me] = getMass(C, thickness);
+        [Me] = getMass(C,h, thickness);
         for dof1 = 1:size(Lg,2)
             for dof2 = 1:size(Lg,2)
                 Mg(Lg(i,dof1), Lg(i,dof2)) = Mg(Lg(i,dof1), Lg(i,dof2)) + Me(dof1,dof2);
@@ -71,7 +71,7 @@ for i = 1:length(Connectivity)
         end
     end
 end
-T = (Kg+h*Mg)\(Fg1 + Fg2 + Fgs + Fgr);
+T = (Kg+Mg)\(Fg1 + Fg2 + Fgs);
 Tg = zeros(elemsizeX,elemsizeY);
 X = zeros(elemsizeX,elemsizeY);
 Y = zeros(elemsizeX,elemsizeY);
