@@ -71,4 +71,5 @@ end
 hold on
 contourf(X, Y, Tg);
 plotMesh(NodeCoord,Connectivity);
+colorbar;
 hold off
